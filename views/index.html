@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="bootstrap.min.css" rel="stylesheet" type="text/css">
+    <title>File Metadata</title>
+</head>
+<style>
+    :root {
+        --blue-gray: #455a64;
+    }
+
+    .bg-blue-grey {
+        background: var(--blue-gray);
+    }
+
+    .text-blue-grey {
+        color: var(--blue-gray);
+    }
+
+    .btn-blue-grey {
+        color: white !important;
+        border-color: var(--blue-gray) !important;
+        background-color: var(--blue-gray) !important;
+    }
+
+    #spanfile {
+        margin-left: 1.9rem;
+    }
+
+    #filelabel {
+        cursor: pointer;
+    }
+</style>
+
+<body>
+
+<nav class="navbar navbar-light bg-blue-grey fixed-top w-100">
+    <div class="container-fluid">
+        <label class="navbar-brand text-white">File Metadata</label>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row  d-flex justify-content-center flex-column vh-100">
+        <form id="formfile" class="col-6 align-self-center" onsubmit="return checkFile()" method="post"
+              action="/api/fileanalyse"
+              enctype="multipart/form-data">
+            <div class="d-grid gap-2">
+                <span class="fw-bold text-blue-grey">Upload a File</span>
+                <div>
+                    <label for="upfile" class="form-control" id="filelabel">
+                        <input name="upfile" class="d-none" id="upfile" type="file" required readonly>
+                        <svg class="bi position-absolute text-blue-grey" width="24" height="24" fill="currentColor">
+                            <use xlink:href="bootstrap-icons.svg#archive-fill"/>
+                        </svg>
+                        <span id="spanfile">Choose a file</span>
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-block btn-sm btn-blue-grey my-2 w-100">Short URL</button>
+        </form>
+    </div>
+</div>
+</body>
+
+<script>
+    const fileInput = document.getElementById('upfile');
+    const spanFile = document.getElementById('spanfile');
+
+    fileInput.addEventListener('change', function () {
+        spanFile.innerText = this.value.split("\\").reverse()[0];
+    });
+
+    function checkFile() {
+        let fileName = document.forms["formfile"]["upfile"].value;
+        return (fileName.length > 0);
+    }
+</script>
+</html>
